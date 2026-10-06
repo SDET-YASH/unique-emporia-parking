@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin - Unique EMPORIA Parking</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <h1>Unique EMPORIA</h1>
+      <p>Admin Panel — Add, edit, and publish parking records</p>
+    </div>
+  </header>
+
+  <main class="container">
+    <div id="message" class="message info" hidden></div>
+
+    <section id="login-section" class="panel login-box">
+      <h2>Login</h2>
+      <form id="login-form">
+        <label for="login-password">Admin Password</label>
+        <input type="password" id="login-password" required placeholder="Default: admin123">
+        <button type="submit" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Login</button>
+      </form>
+    </section>
+
+    <div id="admin-app" hidden>
+      <div class="top-bar">
+        <a href="index.html" class="btn btn-secondary">← Back to Public View</a>
+        <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
+          <button id="download-json-btn" class="btn btn-secondary">Download JSON</button>
+          <label class="btn btn-secondary" style="cursor:pointer;">
+            Import JSON
+            <input type="file" id="import-json" accept=".json" hidden>
+          </label>
+          <button id="publish-btn" class="btn btn-primary">Publish to GitHub</button>
+        </div>
+      </div>
+
+      <div class="admin-grid">
+        <section class="panel">
+          <h2 id="form-title">Add New Record</h2>
+          <form id="record-form">
+            <div class="form-grid">
+              <div>
+                <label for="tower">Tower</label>
+                <input type="text" id="tower" value="B" required>
+              </div>
+              <div>
+                <label for="flatNo">Flat No.</label>
+                <input type="text" id="flatNo" required>
+              </div>
+              <div>
+                <label for="residentName">Resident Name</label>
+                <input type="text" id="residentName" required>
+              </div>
+              <div>
+                <label for="residentType">Resident Type</label>
+                <select id="residentType">
+                  <option>Owner</option>
+                  <option>Tenant</option>
+                </select>
+              </div>
+              <div>
+                <label for="contactNumber">Contact Number</label>
+                <input type="tel" id="contactNumber">
+              </div>
+              <div>
+                <label for="vehicleType">Vehicle Type</label>
+                <select id="vehicleType">
+                  <option>Car</option>
+                  <option>Bike</option>
+                  <option>Other</option>
+                </select>
+              </div>
+              <div>
+                <label for="bayType">Bay Type</label>
+                <select id="bayType">
+                  <option>Open</option>
+                  <option>Stilt</option>
+                  <option>Underground</option>
+                  <option>Unassigned</option>
+                </select>
+              </div>
+              <div>
+                <label for="slotNo">Slot No.</label>
+                <input type="text" id="slotNo">
+              </div>
+              <div>
+                <label for="status">Status</label>
+                <select id="status">
+                  <option>Allocated</option>
+                  <option>Pending</option>
+                </select>
+              </div>
+              <div class="full">
+                <label for="remarks">Remarks / Notes</label>
+                <textarea id="remarks" rows="2"></textarea>
+              </div>
+            </div>
+            <div style="display:flex; gap:0.5rem; margin-top:1rem;">
+              <button type="submit" id="save-btn" class="btn btn-primary">Add Record</button>
+              <button type="button" id="reset-form-btn" class="btn btn-secondary">Reset</button>
+            </div>
+          </form>
+        </section>
+
+        <section class="panel">
+          <h2>GitHub Publish Settings</h2>
+          <p style="color:#5c6478; font-size:0.9rem;">One-time setup. Token stays in your browser only.</p>
+          <form id="github-config-form">
+            <div class="form-grid">
+              <div>
+                <label for="gh-owner">GitHub Username / Org</label>
+                <input type="text" id="gh-owner" placeholder="your-username">
+              </div>
+              <div>
+                <label for="gh-repo">Repository Name</label>
+                <input type="text" id="gh-repo" placeholder="parking-management">
+              </div>
+              <div>
+                <label for="gh-branch">Branch</label>
+                <input type="text" id="gh-branch" value="main">
+              </div>
+              <div>
+                <label for="gh-path">Data File Path</label>
+                <input type="text" id="gh-path" value="data/parking.json">
+              </div>
+              <div class="full">
+                <label for="gh-token">GitHub Personal Access Token</label>
+                <input type="password" id="gh-token" placeholder="ghp_...">
+              </div>
+              <div class="full">
+                <label for="admin-password">Admin Password (change from default)</label>
+                <input type="password" id="admin-password" placeholder="admin123">
+              </div>
+            </div>
+            <button type="submit" class="btn btn-secondary" style="margin-top:1rem;">Save Settings</button>
+          </form>
+        </section>
+      </div>
+
+      <section class="panel" style="margin-top:1.5rem;">
+        <h2>All Records</h2>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Flat</th>
+                <th>Resident</th>
+                <th>Slot</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="admin-records-body"></tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <script src="js/admin.js"></script>
+</body>
+</html>
